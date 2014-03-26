@@ -35,9 +35,10 @@ var OrderListView = Parse.View.extend({
     var createdAt, table, frontImg, backImg;
     this.collection.map(function(order){
       table = $('#orderTable');
-      frontImg = order.get('img_url');
-      backImg = order.get('img_url_back');
-      table.append('<tr><td>' + order.createdAt.toLocaleString() + '<td><a href<img src='+order.get('image_url')+'></img><td><img src='+order.get('image_url_back')+'></img><td><input type="checkbox" class="toggle" name="completed">');
+      frontImg = order.get('image_url');
+      backImg = order.get('image_url_back');
+      debugger;
+      table.append('<tr><td>' + order.createdAt.toLocaleString() + '<td><a href='+frontImg+'><img src='+frontImg+'></img></a><td><a href='+backImg+'><img src='+backImg+'></img></a><td><input type="checkbox" class="toggle" name="completed">');
     });
 
     return this;
