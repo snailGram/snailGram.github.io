@@ -34,7 +34,7 @@ var OrderView = Parse.View.extend({
     return this.$el.html(this.template({
       date: this.model.createdAt.toLocaleString(),
       frontImg: this.model.get('front_image').url(),
-      backImg: this.model.get('imageFile').url(),
+      backImg: this.model.get('back_image').url(),
       checked: checked
     }));
   }

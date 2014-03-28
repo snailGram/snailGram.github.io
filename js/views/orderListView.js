@@ -8,10 +8,6 @@ var OrderListView = Parse.View.extend({
     'click #filterBar a': 'filterOrders'
   },
 
-  test:function(){
-    alert('click!');
-  },
-
   pageCount: function(){
     var orders = this.collection.length;
     var perPage = 10;
@@ -36,7 +32,6 @@ var OrderListView = Parse.View.extend({
     var self = this;
     this.collection.fetch({
       success: function(collection) {
-        console.log('successfully fetched collection');
         self.render();
       },
       error: function(collection, error) {
@@ -46,12 +41,14 @@ var OrderListView = Parse.View.extend({
   },
 
   filterOrders: function(e) {
-    console.log('filtering orders.');
     var query = new Parse.Query(Order);
     var el = $(e.target);
     var filterValue = el.data('completed');
     if  (filterValue !== 'all') {
-      this.collection = query.exists('front_image').exists('imageFile').equalTo('completed', filterValue).limit(10).collection();
+      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', filterValue).limit(10).collection();
+      this.collection.comparator = function(order) {
+        return order.createdAt;
+      };
     } else {
       this.collection = new OrderList();
     }

@@ -500,3 +500,10 @@ tr.complete a {
 tr.complete img {
     opacity: .2;
 }
+#filterBar {
+    border-bottom: 1px dotted #adadad;
+}
+#filterBar a {
+    padding-right: 10px;
+}
+
