@@ -473,10 +473,26 @@ table {
 td {
     border: 1px solid black;
 }
-tr td:nth-child(2) {
+tr td:nth-child(4) {
     text-align: center;
 }
 #orderTable img {
     height: 100px;
     width: 150px;
+}
+/*tr.complete td:before {
+  content: " ";
+  position: relative;
+  top: 50%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}*/
+tr.complete {
+    background-color:rgb(200, 200, 200);
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.3);
+}
+tr.complete img {
+    opacity: .2;
 }

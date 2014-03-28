@@ -1,10 +1,10 @@
 var OrderList = Parse.Collection.extend({
   model: Order,
 
-  query: (new Parse.Query(Order)).notEqualTo('image_url', '').notEqualTo('image_url_back', '').ascending('updatedAt').limit(10),
+  query: (new Parse.Query(Order)).exists('front_image').exists('imageFile').ascending('createdAt').limit(10),
 
   comparator: function(order) {
-    return order.updatedAt;
+    return order.createdAt;
   },
 
   initialize: function() {

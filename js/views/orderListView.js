@@ -8,6 +8,10 @@ var OrderListView = Parse.View.extend({
     'click .filterBar a': 'filterOrders'
   },
 
+  test:function(){
+    alert('click!');
+  },
+
   initialize: function() {
     var self = this;
     this.$el.html(_.template($("#orderList-template").html()));
@@ -30,16 +34,17 @@ var OrderListView = Parse.View.extend({
     delete this;
   },
 
+  filterOrders: function() {
+    console.log('filtering orders.');
+  },
+
   render: function() {
     var self = this;
     var createdAt, table, frontImg, backImg;
-    this.collection.map(function(order){
-      table = $('#orderTable');
-      frontImg = order.get('image_url');
-      backImg = order.get('image_url_back');
-      debugger;
-      table.append('<tr><td>' + order.createdAt.toLocaleString() + '<td><a href='+frontImg+'><img src='+frontImg+'></img></a><td><a href='+backImg+'><img src='+backImg+'></img></a><td><input type="checkbox" class="toggle" name="completed">');
-    });
+    table = $('#orderTable');
+    table.append(this.collection.map(function(order){
+      return new OrderView({model:order}).render();
+    }));
 
     return this;
   },
