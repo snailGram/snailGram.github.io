@@ -53,9 +53,9 @@
       <div class="section">
         <div id="main">
           <div id="filterBar">
-            <a href="javascript:void(0)" id="all">All</a>
-            <a href="javascript:void(0)" id="open">Open</a>
-            <a href="javascript:void(0)" id="completed">Completed</a>
+            <a href="javascript:void(0)" data-completed="all">All</a>
+            <a href="javascript:void(0)" data-completed="false">Open</a>
+            <a href="javascript:void(0)" data-completed="true">Completed</a>
           </div>
           <table id="orderTable">
             <tr>
@@ -63,6 +63,8 @@
               <th>Front Image</th>
               <th>Back Image</th>
               <th>Completed</th>
+            </tr>
+            <tr>
             </tr>
           </table>
         </div>

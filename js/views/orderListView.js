@@ -5,7 +5,7 @@ var OrderListView = Parse.View.extend({
 
   events: {
     'click .logout': 'logout',
-    'click .filterBar a': 'filterOrders'
+    'click #filterBar a': 'filterOrders'
   },
 
   test:function(){
@@ -13,9 +13,20 @@ var OrderListView = Parse.View.extend({
   },
 
   initialize: function() {
-    var self = this;
     this.$el.html(_.template($("#orderList-template").html()));
     this.collection = new OrderList();
+    this.getCollection();
+  },
+
+  logout: function() {
+    Parse.User.logOut();
+    new LoginView();
+    this.undelegateEvents();
+    delete this;
+  },
+
+  getCollection: function() {
+    var self = this;
     this.collection.fetch({
       success: function(collection) {
         console.log('successfully fetched collection');
@@ -27,22 +38,26 @@ var OrderListView = Parse.View.extend({
     });
   },
 
-  logout: function() {
-    Parse.User.logOut();
-    new LoginView();
-    this.undelegateEvents();
-    delete this;
-  },
-
-  filterOrders: function() {
+  filterOrders: function(e) {
     console.log('filtering orders.');
+    var query = new Parse.Query(Order);
+    var el = $(e.target);
+    var filterValue = el.data('completed');
+    if  (filterValue !== 'all') {
+      this.collection = query.exists('front_image').exists('imageFile').equalTo('completed', filterValue).collection();
+    } else {
+      this.collection = new OrderList();
+    }
+    this.getCollection();
+    this.render();
   },
 
   render: function() {
     var self = this;
     var createdAt, table, frontImg, backImg;
-    table = $('#orderTable');
-    table.append(this.collection.map(function(order){
+    $table = $('#orderTable');
+    $table.find('tr:gt(0)').remove();
+    $table.append(self.collection.map(function(order){
       return new OrderView({model:order}).render();
     }));
 
