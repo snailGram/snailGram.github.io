@@ -12,6 +12,13 @@ var OrderListView = Parse.View.extend({
     alert('click!');
   },
 
+  pageCount: function(){
+    var orders = this.collection.length;
+    var perPage = 10;
+    var pages = Math.ceil(orders / perPage);
+    return pages;
+  },
+
   initialize: function() {
     this.$el.html(_.template($("#orderList-template").html()));
     this.collection = new OrderList();
@@ -44,12 +51,11 @@ var OrderListView = Parse.View.extend({
     var el = $(e.target);
     var filterValue = el.data('completed');
     if  (filterValue !== 'all') {
-      this.collection = query.exists('front_image').exists('imageFile').equalTo('completed', filterValue).collection();
+      this.collection = query.exists('front_image').exists('imageFile').equalTo('completed', filterValue).limit(10).collection();
     } else {
       this.collection = new OrderList();
     }
     this.getCollection();
-    this.render();
   },
 
   render: function() {

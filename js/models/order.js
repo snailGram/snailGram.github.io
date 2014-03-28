@@ -2,9 +2,10 @@ var Order = Parse.Object.extend({
   className: 'PostCard',
 
   initialize: function() {
-    if (this.get('completed') === 'undefined') {
-      this.set('completed', false);
-    }
+  },
+
+  initComplete: function() {
+    this.save({'completed': false});
   },
 
   toggle: function() {

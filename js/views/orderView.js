@@ -23,9 +23,13 @@ var OrderView = Parse.View.extend({
 
   render: function() {
     var checked = '';
-    if(this.model.get('completed')){
+    if (this.model.get('completed')){
       checked = 'checked';
       this.$el.addClass('complete');
+    } else if (typeof this.model.get('completed') === 'undefined') {
+      // Need to initialize completed to false
+      // Can't do in model because of fetch process in collection
+      this.model.initComplete();
     }
     return this.$el.html(this.template({
       date: this.model.createdAt.toLocaleString(),
