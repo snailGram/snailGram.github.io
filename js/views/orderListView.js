@@ -47,8 +47,6 @@ var OrderListView = Parse.View.extend({
   },
 
   disableLinks: function(page) {
-    console.log('disabling links');
-    debugger;
     if (this.pageCount() === 1) {
       $('.goForward').addClass('disable');
       $('.goBack').addClass('disable');
