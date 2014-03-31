@@ -5,6 +5,7 @@ var OrderView = Parse.View.extend({
     '<td><%= date %>'+
     '<td><a href=<%= frontImg %> ><img src=<%= frontImg %> ></img></a>'+
     '<td><a href=<%= backImg %> ><img src=<%= backImg %> ></img></a>'+
+    '<td><a href=<%= fullImg %> >Link</a>'+
     '<td><input type="checkbox" class="toggle" <%= checked %> >'
   ),
 
@@ -35,6 +36,7 @@ var OrderView = Parse.View.extend({
       date: this.model.createdAt.toLocaleString(),
       frontImg: this.model.get('front_image').url(),
       backImg: this.model.get('back_image').url(),
+      fullImg: this.model.get('full_image').url(),
       checked: checked
     }));
   }

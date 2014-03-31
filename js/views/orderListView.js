@@ -5,20 +5,62 @@ var OrderListView = Parse.View.extend({
 
   events: {
     'click .logout': 'logout',
-    'click #filterBar a': 'filterOrders'
+    'click #filterBar a': 'filterOrders',
+    'click #pageNav a': 'changePage'
   },
 
-  pageCount: function(){
+  currentPage: 1,
+  filterValue: 'all',
+
+  pageCount: function() {
     var orders = this.collection.length;
     var perPage = 10;
     var pages = Math.ceil(orders / perPage);
     return pages;
   },
 
+  changePage: function(e) {
+    var el = $(e.target);
+    var pageJump = el.attr('id');
+    var nextPage;
+    switch (pageJump) {
+      case 'firstPage':
+        nextPage = 1;
+        break;
+      case 'prevPage':
+        nextPage = this.currentPage--;
+        break;
+      case 'nextPage':
+        nextPage = this.currentPage++;
+        break;
+      case 'lastPage':
+        nextPage = this.pageCount();
+      default:
+    }
+    if (nextPage === this.pageCount()) {
+      $('.goBack').addClass('disable');
+      $('.goForward').removeClass('disable');
+    } else if (nextPage === 1) {
+      $('.goForward').addClass('disable');
+      $('.goBack').removeClass('disable');
+    } else {
+      $('.goBack').removeClass('disable');
+      $('.goForward').removeClass('disable');
+    }
+    var query = new Parse.Query(Order);
+    if (this.filterValue !== 'all') {
+      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', this.filterValue).skip(10*(nextPage-1)).limit(10).collection();
+    } else {
+      this.collection = query.exists('front_iamge').exists('back_image').skip(10*(nextPage-1)).limit(10).collection();
+    }
+    this.getCollection();
+  },
+
   initialize: function() {
     this.$el.html(_.template($("#orderList-template").html()));
     this.collection = new OrderList();
     this.getCollection();
+
   },
 
   logout: function() {
@@ -32,7 +74,10 @@ var OrderListView = Parse.View.extend({
     var self = this;
     this.collection.fetch({
       success: function(collection) {
+        var pages = self.pageCount();
+        $('#pageText').text('Page 1 of '+pages  );
         self.render();
+        this.currentPage = 1;
       },
       error: function(collection, error) {
         console.log('error fetching collection');
@@ -43,9 +88,9 @@ var OrderListView = Parse.View.extend({
   filterOrders: function(e) {
     var query = new Parse.Query(Order);
     var el = $(e.target);
-    var filterValue = el.data('completed');
-    if  (filterValue !== 'all') {
-      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', filterValue).limit(10).collection();
+    this.filterValue = el.data('completed');
+    if  (this.filterValue !== 'all') {
+      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', this.filterValue).limit(10).collection();
       this.collection.comparator = function(order) {
         return order.createdAt;
       };

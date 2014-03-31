@@ -473,21 +473,13 @@ table {
 td {
     border: 1px solid black;
 }
-tr td:nth-child(4) {
+tr td {
     text-align: center;
 }
 #orderTable img {
     height: 100px;
     width: 150px;
 }
-/*tr.complete td:before {
-  content: " ";
-  position: relative;
-  top: 50%;
-  left: 0;
-  border-bottom: 1px solid #111;
-  width: 100%;
-}*/
 tr.complete {
     background-color:rgb(200, 200, 200);
     font-style: italic;
@@ -501,9 +493,21 @@ tr.complete img {
     opacity: .2;
 }
 #filterBar {
+    padding-top: 5px;
     border-bottom: 1px dotted #adadad;
 }
 #filterBar a {
     padding-right: 10px;
+}
+#pageNav {
+    text-align: center;
+}
+#pageNav a {
+    padding-right: 5px;
+}
+.disable a {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
 }
 
