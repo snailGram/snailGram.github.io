@@ -505,7 +505,7 @@ tr.complete img {
 #pageNav a {
     padding-right: 5px;
 }
-.disable a {
+.disable {
     pointer-events: none;
     cursor: default;
     text-decoration: none;
