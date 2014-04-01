@@ -39,9 +39,9 @@ var OrderListView = Parse.View.extend({
     }
     var query = new Parse.Query(Order);
     if (this.filterValue !== 'all') {
-      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', this.filterValue).skip(10*(nextPage-1)).limit(10).collection();
+      this.collection = query.exists('front_image').exists('back_image').exists('full_image').equalTo('completed', this.filterValue).skip(10*(nextPage-1)).limit(10).collection();
     } else {
-      this.collection = query.exists('front_iamge').exists('back_image').skip(10*(nextPage-1)).limit(10).collection();
+      this.collection = query.exists('front_iamge').exists('back_image').exists('full_image').skip(10*(nextPage-1)).limit(10).collection();
     }
     this.getCollection(nextPage);
   },
@@ -96,7 +96,7 @@ var OrderListView = Parse.View.extend({
     var el = $(e.target);
     this.filterValue = el.data('completed');
     if  (this.filterValue !== 'all') {
-      this.collection = query.exists('front_image').exists('back_image').equalTo('completed', this.filterValue).limit(10).collection();
+      this.collection = query.exists('front_image').exists('back_image').exists('full_image').equalTo('completed', this.filterValue).limit(10).collection();
       this.collection.comparator = function(order) {
         return order.createdAt;
       };
