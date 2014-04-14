@@ -3,14 +3,15 @@ var OrderView = Parse.View.extend({
 
   template: _.template(
     '<td><%= date %>'+
-    '<td><a href=<%= frontImg %> ><img src=<%= frontImg %> ></img></a>'+
-    '<td><a href=<%= backImg %> ><img src=<%= backImg %> ></img></a>'+
-    '<td><a href=<%= fullImg %> >Link</a>'+
+    '<td><a href="javascript:void(0)"><img src=<%= frontImg %> ></img></a>'+
+    '<td><a href="javascript:void(0)"><img src=<%= backImg %> ></img></a>'+
     '<td><input type="checkbox" class="toggle" <%= checked %> >'
   ),
 
   events: {
     "click .toggle": "toggleOrder",
+    "click a": "openModal",
+    "click .modal-mask": "closeModal"
   },
 
   toggleOrder: function(){
@@ -20,6 +21,20 @@ var OrderView = Parse.View.extend({
     } else {
       this.$el.removeClass('complete');
     }
+  },
+
+  openModal: function(e){
+    e.preventDefault();
+    var url = e.target.getAttribute('src');
+    // $('.modal-content').append('<img src="'+url+'"></img>');
+    $('.modal-content').append('<img src="'+url+'"></img>');
+    $('.modal-mask').show();
+  },
+
+  closeModal: function(e){
+    e.preventDefault();
+    $('.modal-mask').hide();
+    $('.modal-content').html('');
   },
 
   render: function() {
