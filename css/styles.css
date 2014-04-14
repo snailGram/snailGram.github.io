@@ -512,7 +512,6 @@ tr.complete img {
     color: black;
 }
 .modal-mask {
-    display:none;
     position: fixed;
     z-index: 100;
     top: 0;
@@ -521,7 +520,7 @@ tr.complete img {
     left: 0;
     background-color: rgba(0, 0, 0, 0.6);
 }
-.modal-back {
+/*.modal-back {
     position: absolute;
     width: 60%;
     height: 60%;
@@ -530,13 +529,36 @@ tr.complete img {
     margin: -30% -30%;
     background-color: white;
     border-radius: 10px;
-}
+}*/
 .modal-content {
     width: 100%;
     height: 100;
 }
-.modal-content a {
+.modal-content img {
+    position: fixed;
+    top: 25%;
+    left: 25%;
     width: 6in;
     height: 4in;
+    display: block;
+}
+.no-scroll {
+    overflow:hidden;
+}
+#canvas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+@media print {
+    img {
+        display:block;
+        margin: 0 auto;
+        width: 6in;
+        height: 4in;
+    }
+    .content {
+        display:none;
+    }
 }
 
