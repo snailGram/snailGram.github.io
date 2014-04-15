@@ -1,7 +1,7 @@
 var OrderList = Parse.Collection.extend({
   model: Order,
 
-  perPage: 10,
+  perPage: 4,
   orderCount: null,
   pages: null,
 

@@ -60,16 +60,24 @@ var OrderListView = Parse.View.extend({
   disableLinks: function() {
     if (this.collection.pages === 1) {
       $('.goForward').addClass('disable');
+      $('.goForward').hide();
       $('.goBack').addClass('disable');
+      $('.goBack').hide();
     } else if (this.currentPage === 1) {
       $('.goBack').addClass('disable');
+      $('.goBack').hide();
       $('.goForward').removeClass('disable');
+      $('.goForward').show();
     } else if (this.currentPage === this.collection.pages) {
       $('.goForward').addClass('disable');
+      $('.goForward').hide();
       $('.goBack').removeClass('disable');
+      $('.goBack').show();
     } else {
       $('.goBack').removeClass('disable');
+      $('.goForward').show();
       $('.goForward').removeClass('disable');
+      $('.goForward').show();
     }
   },
 

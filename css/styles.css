@@ -512,7 +512,8 @@ tr.complete img {
     border-bottom: 1px dotted #adadad;
 }
 #filterBar a {
-    padding-right: 10px;
+    /*padding-right: 10px;*/
+    padding-left: 10px;
 }
 #pageNav {
     text-align: center;
@@ -534,6 +535,9 @@ tr.complete img {
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.6);
+}
+.navPages {
+    display:none;
 }
 /*.modal-back {
     position: absolute;
