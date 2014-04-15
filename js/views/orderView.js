@@ -3,15 +3,13 @@ var OrderView = Parse.View.extend({
 
   template: _.template(
     '<td><%= date %>'+
-    '<td><a href="javascript:void(0)"><img src=<%= frontImg %> ></img></a>'+
-    '<td><a href="javascript:void(0)"><img src=<%= backImg %> ></img></a>'+
+    '<td><a download="<%= user %>_<%= salt %>_front.jpg" href="<%= frontImg %>"><img src=<%= frontImg %> ></img></a>'+
+    '<td><a download="<%= user %>_<%= salt %>_back.jpg" href="<%= backImg %>"><img src=<%= backImg %> ></img></a>'+
     '<td><input type="checkbox" class="toggle" <%= checked %> >'
   ),
 
   events: {
-    "click .toggle": "toggleOrder",
-    "click a": "openModal",
-    "click .modal-mask": "closeModal"
+    "click .toggle": "toggleOrder"
   },
 
   toggleOrder: function(){
@@ -21,40 +19,6 @@ var OrderView = Parse.View.extend({
     } else {
       this.$el.removeClass('complete');
     }
-  },
-
-  openModal: function(e){
-    e.preventDefault();
-    var url = e.target.getAttribute('src');
-
-    // var ctx = document.getElementById('canvas').getContext('2d');
-    // var image = new Image(),
-
-    // image.src = url;
-
-    // image.onload = function() {
-    //     ctx.drawImage(img, 0, 0, 4in, 6in);
-    // };
-    // $('.modal-content').append('<img src="'+url+'"></img>');
-    $('body').addClass('no-scroll');
-    $('.modal-content').append('<img src="'+url+'"></img>');
-    $('.modal-mask').show();
-    $('.modal-mask').on('click', '.modal-content', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      $('.modal-mask').hide();
-      $('.modal-content').html('');
-      $('body').removeClass('no-scroll');
-    });
-
-  },
-
-  closeModal: function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    $('.modal-mask').hide();
-    $('.modal-content').html('');
-    $('body').removeClass('no-scroll');
   },
 
   render: function() {
@@ -69,6 +33,8 @@ var OrderView = Parse.View.extend({
     }
     return this.$el.html(this.template({
       date: this.model.createdAt.toLocaleString(),
+      salt: this.model.createdAt.getTime(),
+      user: this.model.get('pfUserID'),
       frontImg: this.model.get('front_image').url(),
       backImg: this.model.get('back_image').url(),
       fullImg: this.model.get('full_image').url(),
