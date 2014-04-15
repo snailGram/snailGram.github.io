@@ -13,20 +13,23 @@ var LoginView = Parse.View.extend({
     var self = this;
     var username = this.$('#login-username').val();
     var password = this.$('#login-password').val();
+    $('.spinner').show();
+    $('.login-form .error').hide();
     Parse.User.logIn(username, password, {
       success: function(user) {
         new OrderListView();
         self.undelegateEvents();
+        self.$(".login-form button").attr("disabled", "disabled");
         delete self;
+        $('.spinner').hide();
       },
 
       error: function(user, error) {
         self.$('.login-form .error').html('Invalid username or password.  Please try again.').show();
-        this.$('.login-form button').removeAttr('disabled');
+        self.$('.login-form button').removeAttr('disabled');
+        $('.spinner').hide();
       }
     });
-
-    this.$(".login-form button").attr("disabled", "disabled");
 
     return false;
   },

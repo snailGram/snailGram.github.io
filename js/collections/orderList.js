@@ -5,18 +5,18 @@ var OrderList = Parse.Collection.extend({
   orderCount: null,
   pages: null,
 
-  query: (new Parse.Query(Order)).exists('front_image').exists('back_image').exists('full_image').ascending('createdAt'),
-
   comparator: function(order) {
     return order.createdAt;
   },
 
   initialize: function(params) {
     var self = this;
+    this.query = new Parse.Query(Order)
+    this.query.exists('front_image').exists('back_image').exists('full_image').ascending('createdAt');
     if (params.filter !== 'all') {
-      self.query.equalTo('completed', params.filter);
+      this.query.equalTo('completed', params.filter);
     }
-    self.query.count({
+    this.query.count({
       success: function(total) {
         self.orderCount = total;
         self.pages = Math.ceil(self.orderCount / self.perPage);
