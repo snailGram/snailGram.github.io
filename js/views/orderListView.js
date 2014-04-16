@@ -84,10 +84,14 @@ var OrderListView = Parse.View.extend({
   render: function() {
     var self = this;
     var createdAt, table, frontImg, backImg;
+    var pageNum = this.currentPage;
     self.disableLinks();
     $table = $('#orderTable');
     $table.find('tr:gt(0)').remove();
-    $('#pageText').text('Page '+this.currentPage+' of '+this.collection.pages );
+    if (!this.collection.pages) {
+      pageNum = 0;
+    }
+    $('#pageText').text('Page '+pageNum+' of '+this.collection.pages );
     $table.append(self.collection.map(function(order){
       return new OrderView({model:order}).render();
     }));
