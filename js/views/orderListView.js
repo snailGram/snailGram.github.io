@@ -75,7 +75,7 @@ var OrderListView = Parse.View.extend({
       $('.goBack').show();
     } else {
       $('.goBack').removeClass('disable');
-      $('.goForward').show();
+      $('.goBack').show();
       $('.goForward').removeClass('disable');
       $('.goForward').show();
     }
