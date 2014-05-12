@@ -31,13 +31,23 @@ var OrderList = Parse.Collection.extend({
 
   fetchOrders: function() {
     var self = this;
-    self.fetch({
-      success: function(collection) {
-        self.trigger('update', self);
-      },
-      error: function(err) {
-        console.log('Error fetching collection');
-      }
+    self.fetch()
+    .then(function() {
+      var promise = new Parse.Promise.as();
+      self.map(function(order){
+        promise = promise.then(function(){
+          var query = new Parse.Query(Parse.User);
+          query.equalTo('username', order.get('user').id);
+          query.first().then(function(user){
+            order.set('email', user.get('email'));
+            promise = order.save();
+          });
+        });
+      });
+      return promise;
+    })
+    .then(function(){
+      self.trigger('update', self);
     });
   },
 

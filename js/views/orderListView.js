@@ -95,6 +95,7 @@ var OrderListView = Parse.View.extend({
     $table.append(self.collection.map(function(order){
       return new OrderView({model:order}).render();
     }));
+
     return this;
   }
 });
