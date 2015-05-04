@@ -6,7 +6,8 @@ var OrderView = Parse.View.extend({
     '<td><a download="<%= user %>_<%= salt %>_front.jpg" href="<%= frontImg %>"><img src=<%= frontImg %> ></img></a>'+
     '<td><a download="<%= user %>_<%= salt %>_back.jpg" href="<%= backImg %>"><img src=<%= backImg %> ></img></a>'+
     '<td><a href="mailto:<%= email %>" class="eText"><%= email %></a></td>'+
-    '<td><input type="checkbox" class="toggle" <%= checked %> >'
+    '<td><input type="checkbox" class="toggle" <%= checked %> <%= disabled %> >' +
+    '<td><%= testing %>'
   ),
 
   events: {
@@ -26,8 +27,13 @@ var OrderView = Parse.View.extend({
     var self = this;
     var checked = '';
     var email = '';
+    var disabled = ''
 
-    if (this.model.get('completed')){
+    if (this.model.get('is_testing')) {
+      this.$el.addClass('testing');
+      disabled = 'disabled'
+    }
+    else if (this.model.get('completed')){
       checked = 'checked';
       this.$el.addClass('complete');
     } else if (typeof this.model.get('completed') === 'undefined') {
@@ -44,7 +50,9 @@ var OrderView = Parse.View.extend({
       backImg: this.model.get('back_image').url(),
       fullImg: this.model.get('full_image').url(),
       email: this.model.get('email'),
-      checked: checked
+      testing: this.model.get('is_testing'),
+      checked: checked,
+      disabled: disabled
     }));
   }
 });

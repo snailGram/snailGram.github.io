@@ -507,6 +507,11 @@ tr.complete a {
 tr.complete img {
     opacity: .2;
 }
+tr.testing {
+    background-color:rgb(200, 200, 200);
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.3);
+}
 #filterBar {
     padding-top: 5px;
     border-bottom: 1px dotted #adadad;

@@ -83,7 +83,7 @@ var OrderListView = Parse.View.extend({
 
   render: function() {
     var self = this;
-    var createdAt, table, frontImg, backImg;
+    var createdAt, table, frontImg, backImg, testing;
     var pageNum = this.currentPage;
     self.disableLinks();
     $table = $('#orderTable');

@@ -11,11 +11,13 @@ var OrderList = Parse.Collection.extend({
 
   initialize: function(params) {
     var self = this;
+
     this.query = new Parse.Query(Order)
     this.query.exists('front_image').exists('back_image').exists('full_image').descending('createdAt');
     if (params.filter !== 'all') {
       this.query.equalTo('completed', params.filter);
     }
+
     this.query.count({
       success: function(total) {
         self.orderCount = total;
